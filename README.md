@@ -3,7 +3,7 @@
 Use this repository to create a new Ximera project by clicking the "Use This Template" button in the upper right hand corner.
 
 - Create your own github repo from this template.
-- Go to overlead.com, create a New Project, and choose 'Import from Github'
+- Go to [https://overleaf.com], create a New Project, and choose 'Import from Github'
 - (if not yet done: grant access to your github repos from Overleaf)
 - Select your repo
 - All done
