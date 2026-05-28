@@ -75,7 +75,7 @@ export DOCKER_DEFAULT_PLATFORM
 # : "${COMMAND:=pdflatex}"     # skip xmlatex inside the container, and directly run a specific command ...    
 
 
-if [[ -f /.dockerenv ]]  
+if [[ -f /.dockerenv && "$CODESPACES" == "" ]]  ## in a (github) codespace, DO start a new docker instance !!!
 then
     [[ -n "$DEBUG" ]] && echo "Running in docker container (with local hostname $HOSTNAME)"
 elif [[ -n "$KUBERNETES_SERVICE_HOST" ]] 
@@ -112,7 +112,7 @@ else
     fi
 
     echo "Restarting myself in docker (from image $DOCKER_IMAGE)"	
-    tty >/dev/null && INTERACTIVE="-it"  # HACK: in termanal, run with -it, to process interrupts with CTRL-C
+    tty >/dev/null && INTERACTIVE="-it"  # HACK: in terminal, run with -it, to process interrupts with CTRL-C
 
     [[ -n "$DEBUG" ]] && echo  \
     docker run --env LOCAL_IP --env XIMERA_URL --env XIMERA_NAME --env GPG_KEY --env GPG_KEY_ID --env DEBUG --network host --rm $INTERACTIVE --mount type=bind,source=$MOUNTDIR,target=/code $DOCKER_IMAGE $COMMAND $*
