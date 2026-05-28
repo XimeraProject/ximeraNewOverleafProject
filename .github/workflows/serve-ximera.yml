@@ -42,12 +42,19 @@ jobs:
 
       - name: Build and publish Ximera courses
         env:
-          ### Use .xmKeyfile for test/demo
+          ### This action uses a dummy .xmKeyfile for demo purposes. THIS IS NOT SAFE FOR PRODUCTION USE
+          ### For production: 
+          ###    * generate a key, 
+          ###    * store it in GPG_KEY and GPG_KEY_ID in Github repository secrets
+          ###    * un-comment the next two lines, and choose a new XIMERA_NAME in the third line
+          ### 
           # GPG_KEY: ${{ secrets.GPG_KEY }}
           # GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          XIMERA_NAME: demo-${{ github.repository_owner }}-${{ github.event.repository.name }}
           XIMERA_URL: "https://xerxes.ximera.org/"
-          XIMERA_NAME: ${{ github.repository_owner }}-${{ github.event.repository.name }}
           XM_COMPILE_SEQUENCE: "html,handout.pdf"
+          # XM_COMPILE_SEQUENCE: "html,handout.pdf,pdf"   ## also generate downloadable PDF's with answers
+          # XIMERA_NAME: <my-own-very-fancy-name>
           # XIMERA_NAME: ${{ vars.XIMERA_NAME }}*${{ github.ref_name }}
           # XIMERA_NAME: ${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.ref_name }}
         run: |
